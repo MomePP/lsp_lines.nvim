@@ -30,6 +30,10 @@ M.setup = function()
         ns.user_data.virt_lines_ns = vim.api.nvim_create_namespace("")
       end
 
+      if opts.virtual_lines.severity.min then
+        diagnostics = vim.tbl_filter(function(t) return t.severity <= opts.virtual_lines.severity.min  end, diagnostics)
+      end
+
       vim.api.nvim_clear_autocmds({ group = "LspLines" })
       if opts.virtual_lines.only_current_line then
         vim.api.nvim_create_autocmd("CursorMoved", {
